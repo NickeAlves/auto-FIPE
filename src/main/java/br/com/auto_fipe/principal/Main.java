@@ -27,18 +27,25 @@ public class Main {
         var opcaoAutomovel = scanner.nextLine();
 
         switch (opcaoAutomovel.toLowerCase()) {
-            case "carro" -> exibirDados("carros", DadosCarros.class);
-            case "moto" -> exibirDados("motos", DadosMotos.class);
-            case "caminhao" -> exibirDados("caminhoes", DadosCaminhoes.class);
+            case "carro" -> exibirMarcas("carros", DadosCarros.class);
+            case "moto" -> exibirMarcas("motos", DadosMotos.class);
+            case "caminhao" -> exibirMarcas("caminhoes", DadosCaminhoes.class);
             default -> System.out.println("Opção inválida!");
         }
+    }
 
-        private <T> void exibirDados(String tipo, Class<T> classe) {
-            try{
-                String json = consumoApi.obterDados(BASE_ENDERECO + opcaoAutomovel + "/marcas/");
-                List<T> marcas = converteDados.obterDados(json, classe);
-            }
-        }
+    private <T> void exibirMarcas(String tipo, Class<T> classe) {
+        String jsonMarcas = consumoApi.obterDados(BASE_ENDERECO + tipo + "/marcas/");
+        List<T> marcas = converteDados.obterDados(jsonMarcas, classe);
+        marcas.forEach(System.out::println);
+    }
+    private <T> void exibirModelos(String tipo, Class<T> Class) {
+        System.out.print("\nSelecione o código da marca desejada: ");
+        var codigoMarca = scanner.nextLine();
+        String jsonModelos = consumoApi.obterDados(BASE_ENDERECO + tipo + "/modelos/");
+        System.out.println(jsonModelos);
+        List<T> modelos = converteDados.obterDados(jsonModelos, classe);
+        modelos.forEach(System.out::println);
     }
 
 }
