@@ -16,36 +16,62 @@ public class Main {
     private final String BASE_ENDERECO = "https://parallelum.com.br/fipe/api/v1/";
 
     public void exibeMenu() {
-        System.out.println(" Bem-vindo(a) ao Auto-FIPE! ");
-        System.out.println("""
-                Opções disponíveis:
-                - Carro
-                - Moto
-                - Caminhão
-                """);
-        System.out.print("Digite a opção desejada: ");
-        var opcaoAutomovel = scanner.nextLine();
+        while (true) {
+            System.out.println(" Bem-vindo(a) ao Auto-FIPE! ");
+            System.out.println("""
+                    Opções disponíveis:
+                    - Carro
+                    - Moto
+                    - Caminhão
+                    - Sair
+                    """);
+            System.out.print("Digite a opção desejada: ");
+            var opcaoAutomovel = scanner.nextLine();
 
-        switch (opcaoAutomovel.toLowerCase()) {
-            case "carro" -> exibirMarcas("carros", DadosCarros.class);
-            case "moto" -> exibirMarcas("motos", DadosMotos.class);
-            case "caminhao" -> exibirMarcas("caminhoes", DadosCaminhoes.class);
-            default -> System.out.println("Opção inválida!");
+            switch (opcaoAutomovel.toLowerCase()) {
+                case "carro" -> {
+                    String urlMarcas = exibirMarcas("carros", DadosCarros.class);
+                    exibirModelos("carros", DadosCarros.class, urlMarcas);
+                }
+                case "moto" -> {
+                    String urlMarcas = exibirMarcas("motos", DadosMotos.class);
+                    exibirModelos("motos", DadosMotos.class, urlMarcas);
+                }
+                case "caminhao" -> {
+                    String urlMarcas = exibirMarcas("caminhoes", DadosCaminhoes.class);
+                    exibirModelos("caminhoes", DadosCaminhoes.class, urlMarcas);
+                }
+                case "sair" -> {
+                    System.out.println("Saindo do programa...");
+                    return;
+                }
+                default -> System.out.println("Opção inválida!");
+            }
         }
     }
 
-    private <T> void exibirMarcas(String tipo, Class<T> classe) {
-        String jsonMarcas = consumoApi.obterDados(BASE_ENDERECO + tipo + "/marcas/");
-        List<T> marcas = converteDados.obterDados(jsonMarcas, classe);
+    private String exibirMarcas(String tipo, Class<?> classe) {
+        String urlMarcas = BASE_ENDERECO + tipo + "/marcas/";
+        String jsonMarcas = consumoApi.obterDados(urlMarcas);
+        List<?> marcas = converteDados.obterDados(jsonMarcas, classe);
         marcas.forEach(System.out::println);
-    }
-    private <T> void exibirModelos(String tipo, Class<T> Class) {
-        System.out.print("\nSelecione o código da marca desejada: ");
-        var codigoMarca = scanner.nextLine();
-        String jsonModelos = consumoApi.obterDados(BASE_ENDERECO + tipo + "/modelos/");
-        System.out.println(jsonModelos);
-        List<T> modelos = converteDados.obterDados(jsonModelos, classe);
-        modelos.forEach(System.out::println);
+        System.out.println(urlMarcas);
+        return urlMarcas;
     }
 
+    System.out.print("\nSelecione o código da marca desejada: ");
+    int codigoMarca = scanner.nextInt();
+
+    private String exibirModelos(int codigoMarca, Class<?> classe, String urlMarcas) {
+        String urlModelos = urlMarcas + codigoMarca + "/modelos/";
+        String jsonModelos = consumoApi.obterDados(urlModelos);
+        System.out.println(jsonModelos);
+        List<?> modelos = converteDados.obterDados(jsonModelos, classe);
+        modelos.forEach(System.out::println);
+        return urlModelos;
+    }
+
+    public static void main(String[] args) {
+        new Main().exibeMenu();
+    }
 }
