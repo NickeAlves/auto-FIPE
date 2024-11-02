@@ -1,8 +1,6 @@
 package br.com.auto_fipe.principal;
 
-import br.com.auto_fipe.model.DadosCaminhoes;
-import br.com.auto_fipe.model.DadosCarros;
-import br.com.auto_fipe.model.DadosMotos;
+import br.com.auto_fipe.model.InfoVeiculos;
 import br.com.auto_fipe.service.ConsumoApi;
 import br.com.auto_fipe.service.ConverteDados;
 
@@ -13,7 +11,7 @@ public class Main {
     private final Scanner scanner = new Scanner(System.in);
     private final ConsumoApi consumoApi = new ConsumoApi();
     private final ConverteDados converteDados = new ConverteDados();
-    private final String BASE_ENDERECO = "https://parallelum.com.br/fipe/api/v1/";
+    private final String BASE_URL = "https://parallelum.com.br/fipe/api/v1/";
 
     public void exibeMenu() {
         while (true) {
@@ -28,48 +26,38 @@ public class Main {
             System.out.print("Digite a opção desejada: ");
             var opcaoAutomovel = scanner.nextLine();
 
-            switch (opcaoAutomovel.toLowerCase()) {
-                case "carro" -> {
-                    String urlMarcas = exibirMarcas("carros", DadosCarros.class);
-                    exibirModelos("carros", DadosCarros.class, urlMarcas);
-                }
-                case "moto" -> {
-                    String urlMarcas = exibirMarcas("motos", DadosMotos.class);
-                    exibirModelos("motos", DadosMotos.class, urlMarcas);
-                }
-                case "caminhao" -> {
-                    String urlMarcas = exibirMarcas("caminhoes", DadosCaminhoes.class);
-                    exibirModelos("caminhoes", DadosCaminhoes.class, urlMarcas);
-                }
-                case "sair" -> {
-                    System.out.println("Saindo do programa...");
-                    return;
-                }
-                default -> System.out.println("Opção inválida!");
+            if (opcaoAutomovel.equalsIgnoreCase("carro")){
+                var urlMarcas = BASE_URL + opcaoAutomovel.toLowerCase() + "s/marcas/";
+                System.out.println(urlMarcas);
+                List<InfoVeiculos> infoVeiculosList = converteDados.obterDados(urlMarcas, InfoVeiculos.class);
+                infoVeiculosList.forEach(System.out::println);
+
+            } else if (opcaoAutomovel.equalsIgnoreCase("moto")) {
+                var urlMarcas = BASE_URL + opcaoAutomovel.toLowerCase() + "s/marcas/";
+                System.out.println(urlMarcas);
+                List<InfoVeiculos> infoVeiculosList = converteDados.obterDados(urlMarcas, InfoVeiculos.class);
+                infoVeiculosList.forEach(System.out::println);
+
+
+            } else if (opcaoAutomovel.equalsIgnoreCase("caminhao")) {
+                var urlMarcas = BASE_URL + "caminhoes/marcas/";
+                System.out.println(urlMarcas);
+                List<InfoVeiculos> infoVeiculosList = converteDados.obterDados(urlMarcas, InfoVeiculos.class);
+                infoVeiculosList.forEach(System.out::println);
+
+
+            } else if (opcaoAutomovel.equalsIgnoreCase("sair")) {
+                System.out.println("Saindo...");
+                break;
+            } else {
+                System.out.println("Opção inválida! Tente novamente");
             }
+
+
         }
     }
 
-    private String exibirMarcas(String tipo, Class<?> classe) {
-        String urlMarcas = BASE_ENDERECO + tipo + "/marcas/";
-        String jsonMarcas = consumoApi.obterDados(urlMarcas);
-        List<?> marcas = converteDados.obterDados(jsonMarcas, classe);
-        marcas.forEach(System.out::println);
-        System.out.println(urlMarcas);
-        return urlMarcas;
-    }
 
-    System.out.print("\nSelecione o código da marca desejada: ");
-    int codigoMarca = scanner.nextInt();
-
-    private String exibirModelos(int codigoMarca, Class<?> classe, String urlMarcas) {
-        String urlModelos = urlMarcas + codigoMarca + "/modelos/";
-        String jsonModelos = consumoApi.obterDados(urlModelos);
-        System.out.println(jsonModelos);
-        List<?> modelos = converteDados.obterDados(jsonModelos, classe);
-        modelos.forEach(System.out::println);
-        return urlModelos;
-    }
 
     public static void main(String[] args) {
         new Main().exibeMenu();
