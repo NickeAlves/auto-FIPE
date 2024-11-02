@@ -1,6 +1,7 @@
 package br.com.auto_fipe.principal;
 
-import br.com.auto_fipe.model.InfoVeiculos;
+import br.com.auto_fipe.model.Marcas;
+import br.com.auto_fipe.model.Modelos;
 import br.com.auto_fipe.service.ConsumoApi;
 import br.com.auto_fipe.service.ConverteDados;
 
@@ -29,21 +30,54 @@ public class Main {
             if (opcaoAutomovel.equalsIgnoreCase("carro")){
                 var urlMarcas = BASE_URL + opcaoAutomovel.toLowerCase() + "s/marcas/";
                 System.out.println(urlMarcas);
-                List<InfoVeiculos> infoVeiculosList = converteDados.obterDados(urlMarcas, InfoVeiculos.class);
-                infoVeiculosList.forEach(System.out::println);
+
+                String jsonMarcas = consumoApi.obterDados(urlMarcas);
+                List<Marcas> marcasList = converteDados.obterDados(jsonMarcas, Marcas.class);
+                marcasList.forEach(System.out::println);
+
+                System.out.print("Selecione o código da marca desejada: ");
+                int codigoMarca = scanner.nextInt();
+                scanner.nextLine();
+
+                var urlModelos = urlMarcas + codigoMarca + "/modelos/";
+                System.out.println(urlModelos);
+                String jsonModelos = consumoApi.obterDados(urlModelos);
+                List<Modelos> modelosList = converteDados.obterDados(jsonModelos, Modelos.class);
+                modelosList.forEach(System.out::println);
+
+
 
             } else if (opcaoAutomovel.equalsIgnoreCase("moto")) {
                 var urlMarcas = BASE_URL + opcaoAutomovel.toLowerCase() + "s/marcas/";
-                System.out.println(urlMarcas);
-                List<InfoVeiculos> infoVeiculosList = converteDados.obterDados(urlMarcas, InfoVeiculos.class);
-                infoVeiculosList.forEach(System.out::println);
+                String jsonMarcas = consumoApi.obterDados(urlMarcas);
+                List<Marcas> marcasList = converteDados.obterDados(jsonMarcas, Marcas.class);
+                marcasList.forEach(System.out::println);
 
+                System.out.print("Selecione o código da marca desejada: ");
+                int codigoMarca = scanner.nextInt();
+                scanner.nextLine();
+
+                var urlModelos = urlMarcas + codigoMarca + "/modelos/";
+                System.out.println(urlModelos);
+                String jsonModelos = consumoApi.obterDados(urlModelos);
+                List<Modelos> modelosList = converteDados.obterDados(jsonModelos, Modelos.class);
+                modelosList.forEach(System.out::println);
 
             } else if (opcaoAutomovel.equalsIgnoreCase("caminhao")) {
-                var urlMarcas = BASE_URL + "caminhoes/marcas/";
-                System.out.println(urlMarcas);
-                List<InfoVeiculos> infoVeiculosList = converteDados.obterDados(urlMarcas, InfoVeiculos.class);
-                infoVeiculosList.forEach(System.out::println);
+                var urlMarcas = BASE_URL + opcaoAutomovel.toLowerCase() + "s/marcas/";
+                String jsonMarcas = consumoApi.obterDados(urlMarcas);
+                List<Marcas> marcasList = converteDados.obterDados(jsonMarcas, Marcas.class);
+                marcasList.forEach(System.out::println);
+
+                System.out.print("Selecione o código da marca desejada: ");
+                int codigoMarca = scanner.nextInt();
+                scanner.nextLine();
+
+                var urlModelos = urlMarcas + codigoMarca + "/modelos/";
+                System.out.println(urlModelos);
+                String jsonModelos = consumoApi.obterDados(urlModelos);
+                List<Modelos> modelosList = converteDados.obterDados(jsonModelos, Modelos.class);
+                modelosList.forEach(System.out::println);
 
 
             } else if (opcaoAutomovel.equalsIgnoreCase("sair")) {
@@ -54,11 +88,10 @@ public class Main {
             }
 
 
+
+
         }
     }
-
-
-
     public static void main(String[] args) {
         new Main().exibeMenu();
     }
