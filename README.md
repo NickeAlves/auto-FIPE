@@ -18,28 +18,28 @@ Tecnologias Utilizadas
 
 Estrutura do Projeto
 
-auto-fipe
-|_ .idea
-|_ .mvn
-|_ src
-|    |_ main
-|    |    |_ java
-|    |         |_ br.com.auto_fipe
-|    |              |_ model
-|    |              |    |_ Dados.java
-|    |              |    |_ Modelos.java
-|    |              |    |_ Veiculo.java
-|    |
-|    |              |_ principal
-|    |              |    |_ main.java
-|    |
-|    |              |_ service
-|    |                   |_ ConsumoApi.java
-|    |                   |_ ConverteDados.java
-|    |                   |_ IConverteDados.java
-|    |
-|    |              |_ AutoFipeApplication.java
-|_ target
+auto-fipe  
+|_ .idea  
+|_ .mvn  
+|_ src  
+|    |_ main  
+|    |    |_ java  
+|    |         |_ br.com.auto_fipe  
+|    |              |_ model  
+|    |              |    |_ Dados.java  
+|    |              |    |_ Modelos.java  
+|    |              |    |_ Veiculo.java  
+|    |  
+|    |              |_ principal  
+|    |              |    |_ main.java  
+|    |  
+|    |              |_ service  
+|    |                   |_ ConsumoApi.java  
+|    |                   |_ ConverteDados.java  
+|    |                   |_ IConverteDados.java  
+|    |  
+|    |              |_ AutoFipeApplication.java  
+|_ target  
 
 Descrição das Principais Classes
 
