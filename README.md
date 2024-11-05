@@ -1,22 +1,23 @@
-Auto-FIPE
+# 🚗 Auto-FIPE
 
 Auto-FIPE é um projeto desenvolvido em Java que consome a API FIPE para realizar consultas de preços de veículos a partir de informações como marca, modelo e ano. Este projeto foi desenvolvido usando Java com Maven e o framework Spring, sendo testado via Postman para as chamadas de API.
-Funcionalidades
+
+# 💼 Funcionalidades
 
     Consultar informações de veículos usando a API FIPE
     Permite busca personalizada por marca, modelo e ano do veículo
     Retorna dados relevantes como o preço do veículo
 
-Tecnologias Utilizadas
+# 💻 Tecnologias Utilizadas
 
     Linguagem Principal: Java
     Gerenciador de Dependências: Maven
     Framework: Spring (sem dependências de web)
     Ferramenta para Consultas API: Postman
     API Utilizada: FIPE API
-        URL Base: https://parallelum.com.br/fipe/api/v1/
+        🔗 URL Base: https://parallelum.com.br/fipe/api/v1/
 
-Estrutura do Projeto
+# 🔄 Estrutura do Projeto
 
 auto-fipe  
 |_ .idea  
@@ -41,14 +42,14 @@ auto-fipe
 |    |              |_ AutoFipeApplication.java  
 |_ target  
 
-Descrição das Principais Classes
+# 📋 Descrição das Principais Classes
 
     Modelos e Veiculo (Pacote: model): Representam as estruturas de dados retornadas da API, incluindo propriedades como código, nome, e modelo.
     ConsumoApi (Pacote: service): Gerencia as requisições HTTP para a API FIPE.
     ConverteDados e IConverteDados (Pacote: service): Realizam a conversão de dados JSON para os objetos Java.
     AutoFipeApplication: Classe principal que inicializa a aplicação.
 
-Como Executar
+# 🧩 Como Executar
 
     Pré-requisitos:
         JDK 8 ou superior
